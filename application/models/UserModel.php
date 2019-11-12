@@ -3,12 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 class UserModel extends CI_Model 
 {     
-    private $table = 'users'; 
+    private $table = 'spareparts'; 
 
     public $id;     
     public $name;     
-    public $email;
-    public $password;     
+    public $merk;
+    public $amount;
+    public $create_at;
     
     public $rule = [  
         [             
@@ -25,17 +26,16 @@ class UserModel extends CI_Model
     }
     
     public function store($request) {          
+        $this->id = $request->id; 
         $this->name = $request->name;          
-        $this->email = $request->email;          
-        $this->password = password_hash($request->password, PASSWORD_BCRYPT);          
-        if($this->db->insert($this->table, $this)){             
-            return ['msg'=>'Berhasil','error'=>false];
-        }
-        return ['msg'=>'Gagal','error'=>true];    
+        $this->merk = $request->merk;
+        $this->amount = $request->amount;
+        $this->create_at = $request->create_at
+        ;
     }     
  
     public function update($request,$id) {          
-        $updateData = ['email' => $request->email, 'name' =>$request->name];        
+        $updateData = ['merk' => $request->merk, 'name' =>$request->name];        
         if($this->db->where('id',$id)->update($this->table, $updateData)){             
             return ['msg'=>'Berhasil','error'=>false];         
         }        
